@@ -1,4 +1,18 @@
-/* Reset Básico */
+/* Variáveis CSS para cores e fontes */
+:root {
+    --primary-color: #C9A96E; /* Marrom dourado */
+    --primary-dark: #A68B5B;
+    --secondary-color: #F0F2F5; /* Cinza claro */
+    --text-color: #333;
+    --text-light: #666;
+    --bg-color: #FFFFFF;
+    --border-color: #E0E0E0;
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Reset básico e estilos globais */
 * {
     margin: 0;
     padding: 0;
@@ -6,70 +20,91 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    color: #333;
+    font-family: var(--font-family);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Para evitar scroll indesejado em mobile */
+    overflow-x: hidden; /* Evita rolagem horizontal */
 }
 
+/* Container principal do aplicativo */
 .app-container {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px var(--shadow-medium);
     width: 100%;
-    max-width: 420px; /* Tamanho típico de celular */
-    height: 100vh; /* Ocupa a altura total da viewport em mobile */
+    max-width: 420px; /* Largura máxima para simular um app mobile */
+    min-height: 100vh; /* Ocupa toda a altura em mobile */
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
 }
 
 /* Telas */
 .screen {
-    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    overflow: hidden;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
 }
 
 .screen.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    position: relative; /* Para que o conteúdo seja visível e interativo */
 }
 
-/* Header */
+/* Cabeçalho do aplicativo */
 .app-header {
-    background-color: #C9A96E; /* Gold */
-    color: #fff;
-    padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
     position: relative;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .app-header h1 {
     font-size: 1.4em;
+    color: var(--primary-dark);
     font-weight: 600;
-    margin: 0;
 }
 
 .back-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: var(--text-color);
     font-size: 1.2em;
     cursor: pointer;
     position: absolute;
-    left: 15px;
-    padding: 5px;
+    left: 0;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: var(--secondary-color);
 }
 
 .back-btn svg {
@@ -77,309 +112,105 @@ body {
     height: 24px;
 }
 
-/* Botões de Ação */
+/* Botões de ação */
 .action-btn {
-    background-color: #C9A96E; /* Gold */
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
     border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
+    border-radius: 10px;
+    padding: 15px 25px;
     font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0 auto;
 }
 
 .action-btn:hover {
-    background-color: #b3945e;
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn svg {
+    width: 22px;
+    height: 22px;
 }
 
 /* Tela de Captura */
 #capture-screen {
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
-    padding: 20px;
 }
 
 .capture-area {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    justify-content: center;
     align-items: center;
     width: 100%;
 }
 
 .capture-tip {
+    color: var(--text-light);
     font-size: 0.9em;
-    color: #666;
-    max-width: 300px;
-    line-height: 1.4;
+    margin-top: 20px;
+    padding: 0 15px;
 }
 
-/* Tela de Análise */
+/* Tela de Análise e Design */
 #analysis-screen {
-    padding-bottom: 20px; /* Espaço para o botão de finalizar */
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; /* Header já tem padding */
 }
 
 .analysis-photo-wrap {
     position: relative;
     width: 100%;
-    padding-top: 100%; /* Proporção 1:1 para a imagem */
+    max-width: 100%;
+    margin: 0 auto 20px auto;
+    border-radius: 12px;
     overflow: hidden;
-    background-color: #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    flex-shrink: 0; /* Não encolher */
 }
 
-.analysis-photo,
-#ai-overlay-canvas,
-#manual-canvas {
+.analysis-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#ai-overlay-canvas, #manual-canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Garante que a imagem se ajuste sem cortar */
-}
-
-#ai-overlay-canvas, #manual-canvas {
-    pointer-events: none; /* Por padrão, não interage com o mouse */
+    pointer-events: none; /* Permite clicar na imagem por baixo */
 }
 
 #manual-canvas {
-    pointer-events: all; /* Apenas o manual-canvas deve ser interativo */
+    pointer-events: auto; /* Permite desenhar */
+    touch-action: none; /* Previne rolagem em touch */
 }
 
-/* Overlay de Análise IA */
 .ai-analyzing-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    z-index: 100;
-}
-
-.ai-ring {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #C9A96E;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.ai-status {
-    font-size: 1.1em;
-}
-
-/* Modos de Visualização (Análise/Design) */
-.view-modes {
-    display: flex;
-    justify-content: center;
-    padding: 15px 0;
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #eee;
-}
-
-.mode-pill {
-    background-color: #eee;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 20px;
-    margin: 0 5px;
-    font-size: 0.95em;
-    font-weight: 500;
-    color: #555;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.mode-pill.active {
-    background-color: #C9A96E;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Resultados da Análise */
-.analysis-points {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    padding: 20px;
-    background-color: #fdfdfd;
-    border-top: 1px solid #eee;
-}
-
-.point-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #fff;
-    padding: 10px 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.point-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #C9A96E;
-}
-
-.point-info {
-    flex-grow: 1;
-}
-
-.point-label {
-    font-size: 0.85em;
-    color: #777;
-}
-
-.point-val {
-    font-size: 1.1em;
-    font-weight: 600;
-    color: #333;
-}
-
-/* Barra de Ferramentas de Design */
-#design-tools {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px 20px;
-    background-color: #f8f8f8;
-    border-top: 1px solid #eee;
-    overflow-y: auto; /* Para permitir scroll se muitos controles */
-}
-
-.tool-group {
-    display: flex;
-    justify-content: space-around;
-    gap: 10px;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.tool-btn {
-    background: none;
-    border: none;
-    color: #555;
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tool-btn svg {
-    width: 22px;
-    height: 22px;
-}
-
-.tool-btn:hover, .tool-btn.active {
-    background-color: #eee;
-    color: #C9A96E;
-}
-
-.design-controls-group {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.design-controls-group h4 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #C9A96E;
-    font-size: 1.1em;
-    text-align: center;
-}
-
-.control-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.control-item label {
-    flex-basis: 100px;
-    font-size: 0.9em;
-    color: #555;
-}
-
-.control-item input[type="range"] {
-    flex-grow: 1;
-    -webkit-appearance: none;
-    height: 6px;
-    background: #ddd;
-    border-radius: 3px;
-    outline: none;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
-
-.control-item input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #C9A96E;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.control-item input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #C9A96E;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.control-item span {
-    width: 30px;
-    text-align: right;
-    font-weight: 600;
-    color: #333;
-}
-
-/* Estilos para o botão Finalizar Design */
-#finalize-design-btn {
-    margin-top: 20px;
-    width: 100%;
-}
-
-/* Media Queries para telas menores (se necessário, mas o design já é mobile-first) */
-@media (max-width: 480px) {
-    .app-container {
-        border-radius: 0;
-    }
-}
+    background-color: rgba(2
